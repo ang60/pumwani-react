@@ -3,17 +3,27 @@ import { StatusBar } from 'expo-status-bar';
 import {  TouchableOpacity, Image, StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { TextInput } from 'react-native-paper'; 
-import { useNavigation } from '@react-navigation/native';
-import { NavigationContainer } from '@react-navigation/native';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import { AppRegistry } from 'react-native';
+import App from './App'; // Change this to the path of your main component
+import { name as appName } from './app.json';
 import { createStackNavigator } from '@react-navigation/stack';
-import { NewScreen } from './NewScreen';
+import { HomeScreen} from './screens/Home'
+import { ProfileScreen} from './screens/Profile'
+// import{ Home } from './Home'
+
+
+AppRegistry.registerComponent(appName, () => App);
 
 const picture = require('./assets/picture.png');
 const borderimage = require('./assets/borderimage.png'); // Replace 'border-image.png' with your actual image file name
 const borderimagetwo = require('./assets/borderimagetwo.png'); // Add the path to the second image
 const Stack = createStackNavigator();
 
-export default function App() {
+
+
+const mystack = () => {
   return (
     <LinearGradient
       colors={['#0BD474' , '#FFFFFF']}
@@ -21,12 +31,23 @@ export default function App() {
       start={{ x: 0, y: 0 }}
       end={{ x: 1, y: 1 }}
     >
+      <NavigationContainer>
+      { <Stack.Navigator>
+        <Stack.Screen
+          name="Home"
+          component={HomeScreen}
+          options={{title: 'Welcome'}}
+        />
+        <Stack.Screen name="Profile" component={ProfileScreen} />
+      </Stack.Navigator>}
+    </NavigationContainer>
 
-    <NavigationContainer>
+    {/* <NavigationContainer>
       <Stack.Navigator>
+        <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />
         <Stack.Screen name="NewScreen" component={NewScreen} />
       </Stack.Navigator>
-    </NavigationContainer>
+    </NavigationContainer> */}
   
       
       {/* Add the welcome title */}
@@ -93,7 +114,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   
-  welcomeTitle: {
+  welcomeTitle: { 
     fontSize: 24,
     fontWeight: 'bold',
     color: 'black',
@@ -176,16 +197,16 @@ const styles = StyleSheet.create({
     left: 100,
     borderRadius: 40,
   },
-  coloredCircleOnEdge: {
-    width: 50,
-    height: 50,
-    backgroundColor: 'brown',
-    borderRadius: 25,
-    position: 'absolute',
-    bottom: 1, // Adjust this value to move the colored circle up or down
-    left: '100%', // Center the circle horizontally within the outer circle
-    marginLeft: -75,
-  },
+  // coloredCircleOnEdge: {
+  //   width: 50,
+  //   height: 50,
+  //   backgroundColor: 'brown',
+  //   borderRadius: 25,
+  //   position: 'absolute',
+  //   bottom: 50, // Adjust this value to move the colored circle up or down
+  //   left: '70%', // Center the circle horizontally within the outer circle
+  //   marginLeft: -15,
+  // },
   dottedCircle: {
     borderWidth: 2,
     borderStyle: 'dotted',
@@ -202,3 +223,5 @@ const styles = StyleSheet.create({
   },
   
 });
+
+export default mystack
